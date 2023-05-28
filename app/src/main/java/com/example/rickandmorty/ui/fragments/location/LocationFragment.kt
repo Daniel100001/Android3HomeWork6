@@ -8,6 +8,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmorty.R
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentLocationBinding
+import com.example.rickandmorty.ui.activity.MainActivity
 import com.example.rickandmorty.ui.adapters.LocationAdapter
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,12 @@ class LocationFragment : BaseFragment<FragmentLocationBinding,LocationViewModel>
             viewModel.fetchLocation().collect{
                 locationAdapter.submitData(it)
             }
+        }
+    }
+
+    override fun bottomNavigationSelected() {
+        (requireActivity() as MainActivity).setOnItemReselectedListener{
+            binding.locationRecyclerView.smoothScrollToPosition(0)
         }
     }
 }

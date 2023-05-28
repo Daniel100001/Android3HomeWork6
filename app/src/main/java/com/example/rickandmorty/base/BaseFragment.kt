@@ -19,6 +19,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(@LayoutRes layoutI
         setUpObserves()
         setUpRequests()
         setUpListeners()
+        bottomNavigationSelected()
     }
 
     protected open fun initialize() {}
@@ -28,4 +29,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(@LayoutRes layoutI
     protected open fun setUpRequests() {}
 
     protected open fun setUpListeners() {}
+
+    protected open fun bottomNavigationSelected() {}
 }

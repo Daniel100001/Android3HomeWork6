@@ -7,6 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmorty.R
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentEpisodeBinding
+import com.example.rickandmorty.ui.activity.MainActivity
 import com.example.rickandmorty.ui.adapters.EpisodeAdapter
 import kotlinx.coroutines.launch
 
@@ -25,12 +26,16 @@ class EpisodeFragment :
     }
 
     override fun setUpObserves() {
-
-
         lifecycleScope.launch {
             viewModel.fetchEpisode().collect{
                 episodeAdapter.submitData(it)
             }
+        }
+    }
+
+    override fun bottomNavigationSelected() {
+        (requireActivity() as MainActivity).setOnItemReselectedListener{
+            binding.episodeRecyclerView.smoothScrollToPosition(0)
         }
     }
 }

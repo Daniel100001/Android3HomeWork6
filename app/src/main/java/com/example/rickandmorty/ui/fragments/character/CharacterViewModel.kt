@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.rickandmorty.data.repositories.CharacterRepository
 
-class SharedViewModel : ViewModel() {
+class CharacterViewModel : ViewModel() {
 
     private val characterRepository = CharacterRepository()
     fun fetchSingleCharacter(id: Int) = characterRepository.fetchSingleCharacter(id)

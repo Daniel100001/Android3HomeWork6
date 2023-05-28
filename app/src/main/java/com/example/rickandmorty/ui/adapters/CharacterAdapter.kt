@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.models.CharacterModel
 
-class CharacterAdapter(private val onItemClick: (model: CharacterModel) -> Unit) :
+class CharacterAdapter(private val onItemClick: (id: Int) -> Unit) :
     PagingDataAdapter<CharacterModel, CharacterAdapter.ViewHolder>(DiffUtilCallback()) {
 
     inner class ViewHolder(private val binding: ItemCharacterBinding) :
@@ -17,11 +17,7 @@ class CharacterAdapter(private val onItemClick: (model: CharacterModel) -> Unit)
 
         init {
             itemView.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    item?.let { onItemClick(it) }
-                }
+                onItemClick(absoluteAdapterPosition)
             }
         }
 
