@@ -9,8 +9,15 @@ import com.example.rickandmorty.data.repositories.CommentRepository
 import com.example.rickandmorty.models.CommentDeleteModel
 import com.example.rickandmorty.models.CommentModel
 import com.example.rickandmorty.models.CommentPutModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CommentViewModel : ViewModel() {
+@HiltViewModel
+class CommentViewModel @Inject constructor(
+    private val repositoryPut: CommentPutRepository,
+    private val repository: CommentRepository,
+    private val repositoryDelete: CommentDelete
+) : ViewModel() {
 
     // Этот фрагмент не считаеться
     private val _characterLiveData = MutableLiveData<CommentModel>()
@@ -25,9 +32,6 @@ class CommentViewModel : ViewModel() {
     private val _characterLiveDataDelete = MutableLiveData<CommentDeleteModel>()
     val commentLiveDataDelete: LiveData<CommentDeleteModel> get() = _characterLiveDataDelete
 
-    private val repositoryPut = CommentPutRepository()
-    private val repository = CommentRepository()
-    private val repositoryDelete = CommentDelete()
 
     fun addComment(comment: CommentModel) {
         repository.addComment(

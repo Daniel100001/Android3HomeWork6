@@ -1,32 +1,57 @@
 package com.example.rickandmorty.data.repositories
 
-
 import android.util.Log
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.rickandmorty.App
-import com.example.rickandmorty.data.repositories.pagingsources.CharacterPagingSource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.rickandmorty.data.db.daos.CharacterDao
+import com.example.rickandmorty.data.remote.apiservices.CharacterApiService
 import com.example.rickandmorty.models.CharacterModel
+import com.example.rickandmorty.models.RickAndMortyResponse
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class CharacterRepository {
+class CharacterRepository @Inject constructor(
+    private val characterApiService: CharacterApiService,
+    private val characterDao: CharacterDao
+){
 
-    fun fetchCharacters(): Flow<PagingData<CharacterModel>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 10,
-                enablePlaceholders = true
-            ),
-            pagingSourceFactory = {
-                CharacterPagingSource(App.characterApi!!)
-            }).flow
+    fun fetchCharacters(): MutableLiveData<RickAndMortyResponse<CharacterModel>> {
+        val data: MutableLiveData<RickAndMortyResponse<CharacterModel>> = MutableLiveData()
+
+        characterApiService.fetchCharacters()
+            .enqueue(object : Callback<RickAndMortyResponse<CharacterModel>> {
+                override fun onResponse(
+                    call: Call<RickAndMortyResponse<CharacterModel>>,
+                    response: Response<RickAndMortyResponse<CharacterModel>>
+                ) {
+                    if (response.isSuccessful && response.body() != null ){
+                        data.value = response.body()
+
+                        characterDao.insertAll(response.body()!!.results)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<RickAndMortyResponse<CharacterModel>>,
+                    t: Throwable
+                ) {
+                    Log.e("error", t.localizedMessage ?: "Error")
+                }
+            })
+
+        return data
     }
+
+    fun getAllCharacters() : LiveData<List<CharacterModel>> {
+        return characterDao.getAll()
+
+    }
+
 
     fun fetchSingleCharacter(id: Int): Flow<CharacterModel?> = callbackFlow {
         val callback = object : Callback<CharacterModel> {
@@ -47,7 +72,7 @@ class CharacterRepository {
             }
         }
 
-        App.characterApi?.fetchSingleCharacter(id)?.enqueue(callback)
+        characterApiService.fetchSingleCharacter(id).enqueue(callback)
 
         // Отменить запрос при отмене потока
         awaitClose {

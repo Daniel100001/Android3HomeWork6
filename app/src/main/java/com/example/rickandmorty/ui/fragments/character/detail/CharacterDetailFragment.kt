@@ -22,7 +22,7 @@ class CharacterDetailFragment : BaseFragment<FragmentCharacterDetailBinding,Char
         lifecycleScope.launch {
             viewModel.fetchSingleCharacter(args.id).collect {
                 binding.name.text = it?.name
-                Glide.with(binding.imageView).load(binding.imageView)
+                Glide.with(binding.imageView).load(it?.image)
                     .into(binding.imageView)
             }
         }

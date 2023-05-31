@@ -9,7 +9,9 @@ import com.example.rickandmorty.databinding.FragmentCommentBinding
 import com.example.rickandmorty.models.CommentDeleteModel
 import com.example.rickandmorty.models.CommentModel
 import com.example.rickandmorty.models.CommentPutModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CommentFragment :
     BaseFragment<FragmentCommentBinding, CommentViewModel>(R.layout.fragment_comment) {
 

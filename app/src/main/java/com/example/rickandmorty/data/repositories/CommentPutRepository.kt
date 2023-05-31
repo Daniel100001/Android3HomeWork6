@@ -1,20 +1,23 @@
 package com.example.rickandmorty.data.repositories
 
-import com.example.rickandmorty.App
+import com.example.rickandmorty.data.remote.apiservices.CommentsApiService
 import com.example.rickandmorty.models.CommentPutModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class CommentPutRepository {
+class CommentPutRepository @Inject constructor(
+    private val commentApi: CommentsApiService,
+) {
 
     fun changeComment(
         comment: CommentPutModel,
         onResponse: (comment: CommentPutModel) -> Unit,
         onFailure: (errorMassage: String) -> Unit
     ) {
-        App.commentApi?.changeComment(commentPutModel = comment)
-            ?.enqueue(object : Callback<CommentPutModel> {
+        commentApi.changeComment(commentPutModel = comment)
+            .enqueue(object : Callback<CommentPutModel> {
                 override fun onResponse(
                     call: Call<CommentPutModel>,
                     response: Response<CommentPutModel>

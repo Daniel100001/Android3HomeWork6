@@ -20,6 +20,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(@LayoutRes layoutI
         setUpRequests()
         setUpListeners()
         bottomNavigationSelected()
+//        isNetworkAvailable()
     }
 
     protected open fun initialize() {}
@@ -31,4 +32,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(@LayoutRes layoutI
     protected open fun setUpListeners() {}
 
     protected open fun bottomNavigationSelected() {}
+
+//    protected open fun isNetworkAvailable() {}
+
 }

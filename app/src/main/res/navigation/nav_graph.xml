@@ -14,16 +14,28 @@
             android:id="@+id/action_characterFragment_to_characterDetailFragment"
             app:destination="@id/characterDetailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/episodeFragment"
         android:name="com.example.rickandmorty.ui.fragments.episode.EpisodeFragment"
         android:label="fragment_episode"
-        tools:layout="@layout/fragment_episode" />
+        tools:layout="@layout/fragment_episode" >
+
+        <action
+            android:id="@+id/action_episodeFragment_to_episodeFragmentDetail"
+            app:destination="@id/episodeFragmentDetail" />
+    </fragment>
+
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.rickandmorty.ui.fragments.location.LocationFragment"
         android:label="fragment_location"
-        tools:layout="@layout/fragment_location" />
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_locationDetailFragment"
+            app:destination="@id/locationDetailFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.example.rickandmorty.ui.fragments.character.detail.CharacterDetailFragment"
@@ -34,6 +46,7 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.example.rickandmorty.ui.fragments.filter.FilterFragment"
@@ -45,8 +58,28 @@
             android:id="@+id/action_filterFragment_to_characterFragment"
             app:destination="@id/characterFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/commentFragment"
         android:name="com.example.rickandmorty.ui.fragments.comment.CommentFragment"
         android:label="CommentFragment" />
+    <fragment
+        android:id="@+id/episodeFragmentDetail"
+        android:name="com.example.rickandmorty.ui.fragments.episode.detail.EpisodeFragmentDetail"
+        android:label="EpisodeFragmentDetail" >
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/locationDetailFragment"
+        android:name="com.example.rickandmorty.ui.fragments.location.detail.LocationDetailFragment"
+        android:label="LocationDetailFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

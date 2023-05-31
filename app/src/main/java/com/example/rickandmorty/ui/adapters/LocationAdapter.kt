@@ -2,16 +2,23 @@ package com.example.rickandmorty.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.ItemLocationBinding
 import com.example.rickandmorty.models.LocationModel
 
-class LocationAdapter : PagingDataAdapter<LocationModel, LocationAdapter.ViewHolder>(DiffUtilCallback()) {
+class LocationAdapter(private val onItemClick: (id: Int) -> Unit) :
+    ListAdapter<LocationModel, LocationAdapter.ViewHolder>(DiffUtilCallback()) {
 
-    class ViewHolder(private val binding: ItemLocationBinding) :
+    inner class ViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick(absoluteAdapterPosition)
+            }
+        }
 
         fun onBind(locationModel: LocationModel?) {
             binding.itemCharacterName.text = locationModel?.name

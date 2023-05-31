@@ -7,7 +7,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmorty.R
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentFilterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterFragmentViewModel>(R.layout.fragment_filter) {
 
     override val binding by viewBinding(FragmentFilterBinding::bind)

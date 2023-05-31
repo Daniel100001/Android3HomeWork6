@@ -1,10 +1,16 @@
 package com.example.rickandmorty.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.rickandmorty.LocationConverter
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "characterModel")
 data class CharacterModel(
 
     @SerializedName("id")
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
 
     @SerializedName("name")
@@ -23,6 +29,11 @@ data class CharacterModel(
     val type: String,
 
     @SerializedName("gender")
-    val gender: String
+    val gender: String,
+
+    @field:TypeConverters(LocationConverter::class)
+    @SerializedName("location")
+    val location: Any
 
 )
+
